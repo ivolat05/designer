@@ -306,6 +306,10 @@ $(function () {
 			"title": "Не забудьте согласовать макет с заказчиком, возможно, у него будут правки. ",
 			"text": ' Если запутались в действиях, загляните в справочник.',
 		},
+		"poster-color-error": {
+			"title": "Эта палитра слишком яркая.",
+			"text": 'Клиент попросил использовать спокойную цветовую гамму.',
+		},
 	}
 
 
@@ -552,7 +556,54 @@ $(function () {
 				})
 				id.classList.add('--active')
 			})
+
+			// выбор цвета
+			function colorSelection() {
+				let btn = document.querySelectorAll('.poster-label-input');
+				btn.forEach(item => {
+					item.addEventListener('click', () => {
+						let dataSize = item.getAttribute('data-size');
+						let dataCompare = item.getAttribute('data-compare');
+						if (dataSize === dataCompare) {
+							deletStatError()
+							let color = item.getAttribute('data-colorSelect');
+							let logo = item.getAttribute('data-logoSelect');
+							if (color) {
+								let posterBox = document.querySelector('.poster-box');
+								posterBox.className = `poster-box ${color}`
+							}
+							if (logo) {
+								let posterLogo = document.querySelector('.poster-logo');
+								if (posterLogo.classList.contains('--active')) {
+									posterLogo.innerHTML = `
+									<div class='poster-box-container'> <div class='poster-box-container-content add '><img src="${logo}" alt="" class="poster-box-img"></div></div>
+									`
+									posterLogo.style.padding = '39px 0 21px 0';
+									posterLogo.style.border = 'none';
+								}
+							}
+						} else {
+							buttonError(listError[`${dataCompare}`]['title'], listError[`${dataCompare}`]['text'])
+						}
+					})
+				})
+			}
+			colorSelection();
 		})
 	}
 	activeBlock()
+
+	// активация ряда добавления элемента
+	function addPoster() {
+		let btn = document.querySelectorAll('.poster-box-row');
+		btn.forEach(item => {
+			item.addEventListener('click', () => {
+				btn.forEach(i => {
+					i.classList.remove('--active')
+				})
+				item.classList.add('--active')
+			})
+		})
+	}
+	addPoster()
 })
