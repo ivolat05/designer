@@ -117,7 +117,7 @@
 								<div class="main-box-name">
 									Задача:
 								</div>
-								<div class="main-box-text">
+								<div class="main-box-text main-color">
 									—
 								</div>
 							</div>
@@ -125,7 +125,7 @@
 								<div class="main-box-name">
 									Цвета:
 								</div>
-								<div class="main-box-text">
+								<div class="main-box-text main-harmonization">
 									—
 								</div>
 							</div>
@@ -133,7 +133,7 @@
 								<div class="main-box-name">
 									Формат:
 								</div>
-								<div class="main-box-text">
+								<div class="main-box-text main-price">
 									—
 								</div>
 							</div>
@@ -141,7 +141,7 @@
 								<div class="main-box-name">
 									Сроки:
 								</div>
-								<div class="main-box-text">
+								<div class="main-box-text main-briefing">
 									—
 								</div>
 							</div>
@@ -159,7 +159,7 @@
 						</div>
 						<div class="designer  main-visible">
 							<div class="designer-head">
-								<div class="designer-head-title">
+								<div class="designer-name">
 									Дизайнер студии «Дизайн будущего»
 								</div>
 								<button class="designer-btn">
@@ -170,7 +170,7 @@
 								Здравствуйте, Дмитрий! Спасибо, что выбрали нас!
 							</div>
 							<div class="designer-box">
-								<button class="dessinger-box-btn --error" data-size="" data-compare="" data-counter="2">
+								<button class="dessinger-box-btn" data-size="main" data-compare="main" data-counter="2">
 									<span>
 										Чем можем помочь?
 									</span>
@@ -181,7 +181,7 @@
 				</div>
 			</div>
 		</main>
-		<section class="poster  part">
+		<section id="poster-part" class="poster  part">
 			<div class="container">
 				<div class="poster-wrapp">
 					<div class="poster-coll">
@@ -1030,34 +1030,37 @@
 	<div id="popup" class="popup mfp-hide">
 	
 	</div>
-	<div class="modal">
-		<div class="modal-coll">
-			<div class="modal-title">
-				Вы провели брифинг с клиентом!
+	<div id="briefing-final" class="modal-wrapper">
+		<div class="modal">
+			<div class="modal-coll">
+				<div class="modal-title">
+					Вы провели брифинг с клиентом!
+				</div>
+				<p class="modal-text">
+					Вы получили задачу и все пожелания заказчика.<br>
+					Теперь можно приступать к созданию дизайна плаката.
+				</p>
 			</div>
-			<p class="modal-text">
-				Вы получили задачу и все пожелания заказчика.<br>
-				Теперь можно приступать к созданию дизайна плаката.
-			</p>
+			<button class="modal-btn" data-part="poster-part">
+				Создать плакат
+			</button>
 		</div>
-		<button class="modal-btn">
-			Создать плакат
-		</button>
 	</div>
-	<div class="modal">
-		<div class="modal-coll">
-			<div class="modal-title">
-				Готово!
+	<div class="modal-wrapper">
+		<div class="modal">
+			<div class="modal-coll">
+				<div class="modal-title">
+					Готово!
+				</div>
+				<p class="modal-text">
+					Вы отправили клиенту исправленный плакат, он всем <br> доволен. Пора отправлять макет в типографию!
+				</p>
 			</div>
-			<p class="modal-text">
-				Вы отправили клиенту исправленный плакат, он всем <br> доволен. Пора отправлять макет в типографию!
-			</p>
+			<button class="modal-btn" data-part="">
+				Далее
+			</button>
 		</div>
-		<button class="modal-btn">
-			Далее
-		</button>
 	</div>
-	
 	<div class="windows-wrapp  ">
 		<div class="windows-box">
 			<div class="winodws-coll">
