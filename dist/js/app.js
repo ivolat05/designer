@@ -602,7 +602,7 @@ $(function () {
 								let posterLogo = document.querySelector('.poster-logo');
 
 								posterLogo.innerHTML = `
-									<span class='poster-box-container'> <span class='poster-box-container-content add '><img src="${logo}" alt="" class="poster-box-img"></span></span>
+									<span class='poster-box-container'> <span class='poster-box-container-content add '><img src="${logo}" alt="" class="poster-box-img poster-box-img-logo"></span></span>
 									`
 								posterLogo.style.padding = '20px 0 20px 0';
 								posterLogo.style.border = 'none';
@@ -689,7 +689,7 @@ $(function () {
 								let posterImages = document.querySelector('.poster-images');
 
 								let posterContainerImages = document.querySelector('.poster-box-container-content-img');
-								posterContainerImages.innerHTML = `<img src="${images}" alt="" class="poster-images-img">`
+								posterContainerImages.innerHTML = `<img src="${images}" alt="" class="poster-images-img poster-images-img--images">`
 								posterImages.style.padding = '15px 0 15px 0';
 
 								lebelDeact('.images-selection')
@@ -812,11 +812,8 @@ $(function () {
 							item.classList.add('opacity-box')
 						})
 					} else {
-						let posterCollMenu = document.querySelector('.poster-coll-menu');
 						let posterCollSubtitle = document.querySelector('.poster-coll-subtitle');
 						let posterCollTitle = document.querySelector('.poster-coll-title');
-
-						posterCollMenu.classList.add('--active');
 						posterCollSubtitle.classList.remove('--active');
 						posterCollTitle.style.display = "flex";
 					}
@@ -877,18 +874,6 @@ $(function () {
 	}
 
 	labelBtn()
-	// активация ряда добавления элемента
-	function addPoster() {
-		let btn = document.querySelectorAll('.poster-box-row');
-		btn.forEach(item => {
-			item.addEventListener('click', () => {
-				btn.forEach(i => {
-					i.classList.remove('--active')
-				})
-				item.classList.add('--active')
-			})
-		})
-	}
 
 	// открыие окон
 	function openWindow() {
@@ -916,4 +901,234 @@ $(function () {
 		})
 	}
 	modalWrappersOpen()
+
+	// активация ряда добавления элемента
+	function addPoster() {
+		let btn = document.querySelectorAll('.poster-box-row');
+		let posterCollMenu = document.querySelector('.poster-coll-menu');
+		let posterCollBtn = document.querySelectorAll('.poster-coll-btn');
+		let posterBox = document.querySelector('.poster-box');
+		let counterLogo = 80;
+		let counterTitle = 25;
+		let counterImages = 230;
+		let counterText = 14;
+		let movingLogo = 1;
+		let movingTitle = 2;
+		let movingImages = 3;
+		let movingText = 4;
+		btn.forEach(item => {
+			item.addEventListener('click', () => {
+				btn.forEach(i => {
+					i.classList.remove('--active')
+				})
+				item.classList.add('--active')
+				if (!posterCollMenu.classList.contains('--active')) {
+					posterCollMenu.classList.add('--active')
+				}
+			})
+		})
+
+		posterCollBtn.forEach(event => {
+			event.addEventListener('click', () => {
+				if (event.classList.contains('btn--up')) {
+
+					btn.forEach(event => {
+						if (event.classList.contains('--active')) {
+							if (event.classList.contains('poster-logo')) {
+								movingLogo -= 1;
+								if (movingLogo == -1) {
+									movingLogo = 4;
+								}
+								posterBox.insertBefore(btn[0], btn[movingLogo]);
+							}
+							if (event.classList.contains('poster-title')) {
+								movingTitle -= 1;
+								if (movingTitle == -1) {
+									movingTitle = 4;
+								}
+								posterBox.insertBefore(btn[1], btn[movingTitle]);
+							}
+							if (event.classList.contains('poster-images')) {
+								movingImages -= 1;
+								if (movingImages == -1) {
+									movingImages = 4;
+								}
+								posterBox.insertBefore(btn[2], btn[movingImages]);
+							}
+							if (event.classList.contains('poster-text')) {
+								movingText -= 1;
+								if (movingText == -1) {
+									movingText = 4;
+								}
+								posterBox.insertBefore(btn[3], btn[movingText]);
+							}
+						}
+					})
+				}
+				if (event.classList.contains('btn--bottom')) {
+					btn.forEach(event => {
+						if (event.classList.contains('--active')) {
+							if (event.classList.contains('poster-logo')) {
+								movingLogo += 1;
+								if (movingLogo == 5) {
+									movingLogo = 1;
+								}
+								posterBox.insertBefore(btn[0], btn[movingLogo]);
+							}
+							if (event.classList.contains('poster-title')) {
+								movingTitle += 1;
+								if (movingTitle == 5) {
+									movingTitle = 0;
+								}
+								posterBox.insertBefore(btn[1], btn[movingTitle]);
+							}
+							if (event.classList.contains('poster-images')) {
+								movingImages += 1;
+								if (movingImages == 5) {
+									movingImages = 0;
+								}
+								posterBox.insertBefore(btn[2], btn[movingImages]);
+							}
+							if (event.classList.contains('poster-text')) {
+								movingText += 1;
+								if (movingText == 5) {
+									movingText = 0;
+								}
+								posterBox.insertBefore(btn[3], btn[movingText]);
+							}
+						}
+					})
+				}
+				if (event.classList.contains('btn--increase')) {
+
+					btn.forEach(event => {
+						if (event.classList.contains('--active')) {
+							if (event.classList.contains('poster-logo')) {
+								counterLogo += 1;
+								let img = document.querySelector('.poster-box-img-logo');
+
+								img.style.height = `${counterLogo}px`;
+							}
+							if (event.classList.contains('poster-title')) {
+								let titlePoster = document.querySelector('.title-poster');
+								counterTitle += 1;
+								titlePoster.style.fontSize = `${counterTitle}px`;
+							}
+							if (event.classList.contains('poster-images')) {
+								counterImages += 2;
+								let image = document.querySelector('.poster-images-img--images');
+
+								image.style.height = `${counterImages}px`;
+
+							}
+							if (event.classList.contains('poster-text')) {
+								let textSelectionContent = document.querySelectorAll('.text-selection-content');
+
+								counterText += 1;
+								textSelectionContent.forEach(i => {
+									i.style.fontSize = `${counterText}px`;
+								})
+							}
+						}
+					})
+				}
+				if (event.classList.contains('btn-decrease')) {
+
+					btn.forEach(event => {
+						if (event.classList.contains('--active')) {
+							if (event.classList.contains('poster-logo')) {
+								counterLogo -= 1;
+								let img = document.querySelector('.poster-box-img-logo');
+
+								img.style.height = `${counterLogo}px`;
+							}
+							if (event.classList.contains('poster-title')) {
+								let titlePoster = document.querySelector('.title-poster');
+								counterTitle -= 1;
+								titlePoster.style.fontSize = `${counterTitle}px`;
+							}
+							if (event.classList.contains('poster-images')) {
+								counterImages -= 2;
+								let image = document.querySelector('.poster-images-img--images');
+
+								image.style.height = `${counterImages}px`;
+
+							}
+							if (event.classList.contains('poster-text')) {
+								let textSelectionContent = document.querySelectorAll('.text-selection-content');
+
+								counterText -= 1;
+								textSelectionContent.forEach(i => {
+									i.style.fontSize = `${counterText}px`;
+								})
+							}
+						}
+					})
+				}
+				if (event.classList.contains('btn--left')) {
+
+					btn.forEach(event => {
+						if (event.classList.contains('--active')) {
+							event.style.justifyContent = 'start'
+							if (event.classList.contains('poster-title')) {
+								let titlePoster = document.querySelector('.title-poster');
+								titlePoster.style.textAlign = 'left'
+							}
+							if (event.classList.contains('poster-text')) {
+								let textSelectionContent = document.querySelectorAll('.text-selection-content');
+								let posterContainerSignature = document.querySelector('.poster-container-signature');
+
+								posterContainerSignature.style.alignItems = 'start'
+								textSelectionContent.forEach(i => {
+									i.style.textAlign = 'left'
+								})
+							}
+						}
+					})
+				}
+				if (event.classList.contains('btn--center')) {
+					console.log('btn--center')
+					btn.forEach(event => {
+						if (event.classList.contains('--active')) {
+							event.style.justifyContent = 'center'
+							if (event.classList.contains('poster-title')) {
+								let titlePoster = document.querySelector('.title-poster');
+								titlePoster.style.textAlign = 'center'
+							}
+							if (event.classList.contains('poster-text')) {
+								let textSelectionContent = document.querySelectorAll('.text-selection-content');
+								let posterContainerSignature = document.querySelector('.poster-container-signature');
+
+								posterContainerSignature.style.alignItems = 'center'
+								textSelectionContent.forEach(i => {
+									i.style.textAlign = 'center'
+								})
+							}
+						}
+					})
+				}
+				if (event.classList.contains('btn--right')) {
+					btn.forEach(event => {
+						if (event.classList.contains('--active')) {
+							event.style.justifyContent = 'end'
+							if (event.classList.contains('poster-title')) {
+								let titlePoster = document.querySelector('.title-poster');
+								titlePoster.style.textAlign = 'right'
+							}
+							if (event.classList.contains('poster-text')) {
+								let textSelectionContent = document.querySelectorAll('.text-selection-content');
+								let posterContainerSignature = document.querySelector('.poster-container-signature');
+
+								posterContainerSignature.style.alignItems = 'end'
+								textSelectionContent.forEach(i => {
+									i.style.textAlign = 'right'
+								})
+							}
+						}
+					})
+				}
+			})
+		})
+	}
+	addPoster()
 })
