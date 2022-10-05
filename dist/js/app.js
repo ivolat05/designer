@@ -310,6 +310,10 @@ $(function () {
 			"title": "Эта палитра слишком яркая.",
 			"text": 'Клиент попросил использовать спокойную цветовую гамму.',
 		},
+		"printing-erorr": {
+			"title": "Ой, это неверный вариант! ",
+			"text": 'Загляните в справочник, если не получается выбрать правильный ответ.',
+		},
 	}
 
 
@@ -557,42 +561,322 @@ $(function () {
 				id.classList.add('--active')
 			})
 
+			function lebelDeact(classItem) {
+				let list = document.querySelectorAll(`${classItem}`);
+				list.forEach(item => {
+					item.parentElement.classList.add('--deactive');
+				})
+			};
 			// выбор цвета
 			function colorSelection() {
 				let btn = document.querySelectorAll('.poster-label-input');
+				let textNum = 0;
+				let counter = 0;
+				let counterReduct = 0;
 				btn.forEach(item => {
 					item.addEventListener('click', () => {
+
 						let dataSize = item.getAttribute('data-size');
 						let dataCompare = item.getAttribute('data-compare');
+
 						if (dataSize === dataCompare) {
 							deletStatError()
 							let color = item.getAttribute('data-colorSelect');
 							let logo = item.getAttribute('data-logoSelect');
+							let title = item.getAttribute('data-titleSelect');
+							let titleReduct = item.getAttribute('data-titleSelectReduct');
+							let fontTitle = item.getAttribute('data-fontTitleSelect');
+							let fontTitleRuct = item.getAttribute('data-fontTitleSelectReduct');
+							let images = item.getAttribute('data-imagesSelect');
+							let text = item.getAttribute('data-textSelect');
+							let fontText = item.getAttribute('data-fontTextSelect');
 							if (color) {
 								let posterBox = document.querySelector('.poster-box');
+
 								posterBox.className = `poster-box ${color}`
+								lebelDeact('.color-selection')
+								item.parentElement.classList.remove('--deactive')
+								counter += 1;
 							}
 							if (logo) {
 								let posterLogo = document.querySelector('.poster-logo');
-								if (posterLogo.classList.contains('--active')) {
-									posterLogo.innerHTML = `
-									<div class='poster-box-container'> <div class='poster-box-container-content add '><img src="${logo}" alt="" class="poster-box-img"></div></div>
+
+								posterLogo.innerHTML = `
+									<span class='poster-box-container'> <span class='poster-box-container-content add '><img src="${logo}" alt="" class="poster-box-img"></span></span>
 									`
-									posterLogo.style.padding = '39px 0 21px 0';
-									posterLogo.style.border = 'none';
-								}
+								posterLogo.style.padding = '20px 0 20px 0';
+								posterLogo.style.border = 'none';
+
+								lebelDeact('.logo-selection')
+								item.parentElement.classList.remove('--deactive')
+								counter += 1;
+
+							}
+							if (title) {
+								let posterTitle = document.querySelector('.poster-title');
+								let posterContainerTitle = document.querySelector('.poster-container-title');
+
+								let blockReadct = item.getAttribute('data-redact');
+								let idReadct = document.querySelector(`.${blockReadct}`);
+								let redactText = document.querySelectorAll('.redact-text');
+								redactText.forEach(x => {
+									x.classList.remove('--deactive-block')
+									x.parentElement.classList.remove('--deactive-block')
+								})
+								idReadct.classList.add('--deactive-block')
+								idReadct.parentElement.classList.add('--deactive-block')
+
+								posterContainerTitle.innerHTML = title
+								posterContainerTitle.classList.add('title-poster')
+								posterTitle.style.padding = '0';
+
+								lebelDeact('.title-selection')
+								item.parentElement.classList.remove('--deactive')
+								counter += 1;
+							}
+							if (titleReduct) {
+								let posterTitle = document.querySelector('.poster-title');
+								let posterContainerTitle = document.querySelector('.poster-container-title');
+
+								posterContainerTitle.innerHTML = titleReduct
+								posterContainerTitle.classList.add('title-poster')
+								posterTitle.style.padding = '0';
+
+								lebelDeact('.redact-text')
+								item.parentElement.classList.remove('--deactive')
+								counterReduct += 1;
+							}
+							if (fontTitle) {
+								let posterContainerTitle = document.querySelector('.poster-container-title');
+
+								let blockReadct = item.getAttribute('data-redact');
+								let idReadct = document.querySelector(`.${blockReadct}`)
+								let redactFont = document.querySelectorAll('.redact-font');
+								redactFont.forEach(x => {
+									x.classList.remove('--deactive-block')
+									x.parentElement.classList.remove('--deactive-block')
+								})
+								idReadct.classList.add('--deactive-block')
+								idReadct.parentElement.classList.add('--deactive-block')
+
+
+								posterContainerTitle.classList.remove('font-title-inter')
+								posterContainerTitle.classList.remove('font-title-pt-ser')
+								posterContainerTitle.classList.remove('font-title-lobster')
+								posterContainerTitle.classList.remove('font-title-pt')
+								posterContainerTitle.classList.add(`${fontTitle}`)
+
+
+								lebelDeact('.font-title-selection')
+								item.parentElement.classList.remove('--deactive')
+								counter += 1;
+							}
+							if (fontTitleRuct) {
+								let posterContainerTitle = document.querySelector('.poster-container-title');
+
+								posterContainerTitle.classList.remove('font-title-inter')
+								posterContainerTitle.classList.remove('font-title-pt-ser')
+								posterContainerTitle.classList.remove('font-title-lobster')
+								posterContainerTitle.classList.remove('font-title-pt')
+								posterContainerTitle.classList.add(`${fontTitleRuct}`)
+
+
+								lebelDeact('.redact-font')
+								item.parentElement.classList.remove('--deactive')
+								counterReduct += 1;
+							}
+							if (images) {
+								let posterImages = document.querySelector('.poster-images');
+
+								let posterContainerImages = document.querySelector('.poster-box-container-content-img');
+								posterContainerImages.innerHTML = `<img src="${images}" alt="" class="poster-images-img">`
+								posterImages.style.padding = '15px 0 15px 0';
+
+								lebelDeact('.images-selection')
+								item.parentElement.classList.remove('--deactive')
+								counter += 1;
+							}
+							if (text) {
+								let posterText = document.querySelector('.poster-text');
+								let textSelection = document.querySelectorAll('.text-selection');
+								let posterContainerSignature = document.querySelector('.poster-container-signature');
+
+								posterText.style.padding = '0 0 15px 0';
+								posterContainerSignature.classList.add('--flex-col')
+
+								posterContainerSignature.innerHTML = '';
+								let textSelectionAdd = document.querySelectorAll('.text-selection');
+
+								textSelectionAdd.forEach(event => {
+									if (event.checked) {
+										let texts = event.getAttribute('data-textSelect');
+
+										textNum += 1;
+										if (textNum < 3) {
+											let element = document.createElement("span");
+											element.classList.add('text-selection-content');
+											element.innerHTML = texts;
+											posterContainerSignature.appendChild(element)
+										} else {
+											for (let i = 0; i < textSelectionAdd.length; i++) {
+												if (textSelectionAdd[i].checked) {
+													textSelectionAdd[i].checked = false;
+													break
+												}
+											}
+										}
+									}
+								})
+								textNum = 0;
+
+
+								lebelDeact('.text-selection');
+								textSelection.forEach(event => {
+									if (event.checked) {
+										event.parentElement.classList.remove('--deactive')
+									}
+								})
+								counter += 1;
+
+							}
+							if (fontText) {
+								let posterContainerSignature = document.querySelector('.poster-container-signature');
+								posterContainerSignature.classList.remove('font-title-inter')
+								posterContainerSignature.classList.remove('font-title-pt-ser')
+								posterContainerSignature.classList.remove('font-title-lobster')
+								posterContainerSignature.classList.remove('font-title-pt')
+								posterContainerSignature.classList.add(`${fontText}`)
+
+								lebelDeact('.font-text-selection')
+								item.parentElement.classList.remove('--deactive')
+								counter += 1;
 							}
 						} else {
 							buttonError(listError[`${dataCompare}`]['title'], listError[`${dataCompare}`]['text'])
+							let pushError = document.querySelectorAll('.push-error');
+							if (pushError.length == 2) {
+								pushError[0].remove()
+							}
+						}
+
+						if (counter == 7) {
+							let posterBtnOne = document.querySelector('.poster-btn-one');
+							posterBtnOne.classList.remove('--deactive')
+						}
+
+						if (counterReduct == 2) {
+							let posterBtnOne = document.querySelector('.edits-btn');
+							posterBtnOne.classList.remove('--deactive')
 						}
 					})
+
 				})
+
 			}
 			colorSelection();
 		})
 	}
 	activeBlock()
+	// активация подгруппы
 
+	function posterColl() {
+		let btn = document.querySelectorAll('.poster-btn-open');
+		let windowsWrapp = document.querySelectorAll('.windows-wrapp');
+		btn.forEach(item => {
+			item.addEventListener('click', () => {
+				let dataArr = item.getAttribute('data-box');
+				deletStatError()
+				windowsWrapp.forEach(e => {
+					e.classList.remove('--active')
+				})
+				if (dataArr) {
+					let id = document.getElementById(dataArr);
+					let posterColl = document.querySelectorAll('.poster-coll-2');
+					posterColl.forEach(e => {
+						e.classList.remove('--active')
+					})
+					id.classList.add('--active')
+					if (dataArr == 'presentation') {
+						let posterCollMenu = document.querySelector('.poster-coll-menu');
+						let posterCollSubtitle = document.querySelector('.poster-coll-subtitle');
+						let posterCollTitle = document.querySelector('.poster-coll-title');
+
+						posterCollMenu.classList.remove('--active');
+						posterCollSubtitle.classList.add('--active');
+						posterCollTitle.style.display = "none";
+
+						let contentBoxInfo = document.querySelector('.poster-wrapper-box').innerHTML;
+						let contentListBox = document.querySelectorAll('.present-container ');
+						contentListBox.forEach(item => {
+							item.innerHTML = contentBoxInfo
+							item.classList.add('opacity-box')
+						})
+					} else {
+						let posterCollMenu = document.querySelector('.poster-coll-menu');
+						let posterCollSubtitle = document.querySelector('.poster-coll-subtitle');
+						let posterCollTitle = document.querySelector('.poster-coll-title');
+
+						posterCollMenu.classList.add('--active');
+						posterCollSubtitle.classList.remove('--active');
+						posterCollTitle.style.display = "flex";
+					}
+				}
+			})
+		})
+	}
+	posterColl()
+
+	// проверка ввода через кнопку
+	function labelBtn() {
+		let presentBtn = document.querySelectorAll('.present-btn');
+		let counterLabel = 0;
+		let counterLabelTwo = 0;
+		presentBtn.forEach(item => {
+			item.addEventListener('click', () => {
+				let dataArr = item.getAttribute('data-label');
+				let classList = document.querySelectorAll(`.${dataArr}`);
+
+				classList.forEach(event => {
+					if (event.checked) {
+						let dataSize = event.getAttribute('data-size');
+						let dataCompare = event.getAttribute('data-compare');
+						if (dataSize == dataCompare) {
+							deletStatError()
+							counterLabel += 1
+							item.classList.add('--deactive');
+							item.innerHTML = 'Готово'
+							classList.forEach(e => {
+								e.parentElement.classList.add('--deactive')
+								e.parentElement.classList.add('-deactive')
+							})
+							event.parentElement.classList.remove('--deactive')
+							if (item.classList.contains('printing-row-btn')) {
+								counterLabelTwo += 1;
+							}
+						} else {
+							buttonError(listError[`${dataCompare}`]['title'], listError[`${dataCompare}`]['text'])
+							if (item.classList.contains('printing-row-btn')) {
+								event.parentElement.classList.add('--error-block')
+								event.classList.add('--error-block')
+							}
+						}
+					}
+				})
+
+				if (counterLabel == 2) {
+					let editsButton = document.querySelector('.edits-button');
+					editsButton.classList.remove('--deactive')
+				}
+
+				if (counterLabelTwo == 4) {
+					let editsButtonTwo = document.querySelector('.printing-btn');
+					editsButtonTwo.classList.remove('--deactive')
+				}
+			})
+		})
+	}
+
+	labelBtn()
 	// активация ряда добавления элемента
 	function addPoster() {
 		let btn = document.querySelectorAll('.poster-box-row');
@@ -605,5 +889,31 @@ $(function () {
 			})
 		})
 	}
-	addPoster()
+
+	// открыие окон
+	function openWindow() {
+		let btn = document.querySelectorAll('.open-window');
+
+		btn.forEach(item => {
+			item.addEventListener('click', () => {
+				let dataArr = item.getAttribute('data-window');
+				let id = document.getElementById(dataArr);
+				id.classList.add('--active')
+			})
+		})
+	}
+	openWindow()
+	// открытие малого окна
+	function modalWrappersOpen() {
+		let btn = document.querySelectorAll('.modal-wrappers-open');
+		btn.forEach(item => {
+			item.addEventListener('click', () => {
+				deletStatError()
+				let dataArr = item.getAttribute('data-wrapper');
+				let id = document.getElementById(dataArr);
+				id.classList.add('--active');
+			})
+		})
+	}
+	modalWrappersOpen()
 })
